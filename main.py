@@ -1,10 +1,17 @@
+import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
 from google import genai        # import google's genai library
 
 
 def main():
-    # load environmental variables and get API key from os
+    # Parse command-line arguments
+    # TODO: implement better description
+    parser = argparse.ArgumentParser(description="chatbot")
+    parser.add_argument("user_prompt", type=str, help="User prompt")
+    args = parser.parse_args()
+
+    # Load environmental variables and get API key from os
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
 
@@ -18,7 +25,7 @@ def main():
     # Make a call to the Gemini API this creates a GenerateContentResponse object
     response_object = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
+        contents=args.user_prompt
     )
 
     # Track token usage
