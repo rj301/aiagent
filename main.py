@@ -21,7 +21,15 @@ def main():
         contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
     )
 
-    # Access the text from the Gemini API call's response object
+    # Track token usage
+    if not response_object.usage_metadata:
+        raise RuntimeError("failed API request")
+    prompt_tokens = response_object.usage_metadata.prompt_token_count
+    response_tokens = response_object.usage_metadata.candidates_token_count
+
+    # Print API response and token usage
+    print(f"Prompt tokens: {prompt_tokens}")
+    print(f"Response tokens: {response_tokens}")
     print(response_object.text)
 
 
