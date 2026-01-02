@@ -10,7 +10,7 @@ def main():
 
     # Confirm API key exists
     if not api_key:
-        raise Exception("API key not found")
+        raise RuntimeError("API key not found")
 
     # Create an instance of a Gemini client
     client = genai.Client(api_key=api_key)
