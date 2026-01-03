@@ -57,5 +57,5 @@ def _build_file_str(target_directory):
     """
     def inner(file):
         file_path = os.path.join(target_directory, file)
-        return f"- {file}: file_size = {os.path.getsize(file_path)}, is_dir = {os.path.isdir(file_path)}"
+        return f"- {file}: file_size={os.path.getsize(file_path)} bytes, is_dir={os.path.isdir(file_path)}"
     return inner
