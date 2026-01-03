@@ -8,7 +8,8 @@ from google.genai import types
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="AI agent code assistant")
-    parser.add_argument("user_prompt", type=str, help="User prompt for Gemini")
+    parser.add_argument("user_prompt", type=str, help="user prompt for Gemini")
+    parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     args = parser.parse_args()
 
     # Load environmental variables and get API key from os
@@ -38,8 +39,10 @@ def main():
     response_tokens = response_object.usage_metadata.candidates_token_count
 
     # Print API response and token usage
-    print(f"Prompt tokens: {prompt_tokens}")
-    print(f"Response tokens: {response_tokens}")
+    if args.verbose:
+        print(f"User prompt: {args.user_prompt}")
+        print(f"Prompt tokens: {prompt_tokens}")
+        print(f"Response tokens: {response_tokens}")
     print(response_object.text)
 
 
