@@ -21,6 +21,7 @@ def get_files_info(working_directory, directory="."):
     :return: String listing each file, its size, and if it is a directory
     """
     try:
+        # Check for valid parameters
         working_dir_abs = os.path.abspath(working_directory)
         target_dir = os.path.normpath(os.path.join(working_dir_abs, directory))
         is_valid_target_dir = os.path.commonpath([working_dir_abs, target_dir]) == working_dir_abs
@@ -32,7 +33,6 @@ def get_files_info(working_directory, directory="."):
         if not os.path.isdir(target_dir):
             return f"Error: \"{directory}\" is not a directory"
 
-        # Get info for all files
         files_info = list(map(_build_file_str(target_dir), os.listdir(target_dir)))
 
         return '\n'.join(files_info)

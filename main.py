@@ -1,3 +1,8 @@
+"""
+Guided project from Boot.dev to create an AI agent using Gemini API, python, and functional programming
+"""
+
+
 import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
