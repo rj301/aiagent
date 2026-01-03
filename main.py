@@ -2,13 +2,13 @@ import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
 from google import genai        # import google's genai library
+from google.genai import types
 
 
 def main():
     # Parse command-line arguments
-    # TODO: implement better description
-    parser = argparse.ArgumentParser(description="chatbot")
-    parser.add_argument("user_prompt", type=str, help="User prompt")
+    parser = argparse.ArgumentParser(description="AI agent code assistant")
+    parser.add_argument("user_prompt", type=str, help="User prompt for Gemini")
     args = parser.parse_args()
 
     # Load environmental variables and get API key from os
@@ -22,10 +22,13 @@ def main():
     # Create an instance of a Gemini client
     client = genai.Client(api_key=api_key)
 
+    # Initialize list of conversation messages with initial user prompt
+    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
+
     # Make a call to the Gemini API this creates a GenerateContentResponse object
     response_object = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=args.user_prompt
+        contents=messages
     )
 
     # Track token usage
