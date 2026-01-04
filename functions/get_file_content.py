@@ -14,7 +14,7 @@ def get_file_content(working_directory, file_path):
     Function that gets file content for a specified file
     :param working_directory: Directory valid files must be located within
     :param file_path: Path to target file
-    :return: String containing content of the target file
+    :return: Success or failure of reading from target file
     """
     try:
         # Check for valid parameters
