@@ -1,8 +1,7 @@
 """
 This module provides a function that gets file content for a specified file. A file path is valid if it is within the
 working_directory. The function is intended to be used by an AI agent via the Gemini API. The agent is restricted to
-only access files within the working directory. This function confirms valid file path and returns the file's content as
-one string.
+only access files within the working directory.
 """
 
 import os
@@ -14,7 +13,7 @@ def get_file_content(working_directory, file_path):
     Function that gets file content for a specified file
     :param working_directory: Directory valid files must be located within
     :param file_path: Path to target file
-    :return: Success or failure of reading from target file
+    :return: Content of file or failure of reading from target file
     """
     try:
         # Check for valid parameters

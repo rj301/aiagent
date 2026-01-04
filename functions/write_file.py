@@ -1,7 +1,7 @@
 """
 This module provides a function that writes to a specified file. A file is valid if it is within the working_directory.
 The function is intended to be used by an AI agent via the Gemini API. The agent is restricted to only access files
-within the working directory. This function confirms valid file path and returns the file's content as one string.
+within the working directory.
 """
 
 import os
