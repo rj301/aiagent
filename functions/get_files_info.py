@@ -29,10 +29,13 @@ def get_files_info(working_directory, directory="."):
         if not is_valid_target_dir:
             return f"Error: Cannot list \"{directory}\" as it is outside permitted working directory"
 
-        # Will also exit program if file is not found, preempt with existence check for more accurate error messages
-        if not os.path.isdir(target_dir):
-            return f"Error: \"{directory}\" is not a directory"
+        if not os.path.exists(target_dir):
+            return f"Error: \"{target_dir}\" does not exist"
 
+        if not os.path.isdir(target_dir):
+            return f"Error: \"{directory}\" exists but it is not a directory"
+
+        # Get information for all files in the directory
         files_info = list(map(_build_file_str(target_dir), os.listdir(target_dir)))
 
         return '\n'.join(files_info)

@@ -25,10 +25,12 @@ def get_file_content(working_directory, file_path):
         if not is_valid_target_file:
             return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
 
-        # Will also exit program if file is not found, preempt with existence check for more accurate error messages
         if not os.path.isfile(target_file_path):
-            return f"Error: \"{file_path}\" file not found or is not a regular file"
+            if os.path.isdir(target_file_path):
+                return f"Error: \"{file_path}\" is a directory instead of a file and cannot be read"
+            return f"Error: \"{file_path}\" file not found"
 
+        # Read from file and check if file continues beyond what is read
         with open(target_file_path, "r") as file:
             file_content = file.read(MAX_CHARS)
             if file.read(1):
@@ -36,5 +38,11 @@ def get_file_content(working_directory, file_path):
 
         return file_content
 
+    except PermissionError as e:
+        return f"Error: {e}"
+    except TypeError as e:
+        return f"Error: {e}"
+    except UnicodeEncodeError as e:
+        return f"Error: {e}"
     except Exception as e:
         return f"Error: {e}"

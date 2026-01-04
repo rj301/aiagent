@@ -42,6 +42,13 @@ def write_file(working_directory, file_path, content):
 
         return f"Successfully wrote to \"{file_path}\" ({len(content)} characters written)"
 
-    # TODO: create more clear error handling
+    except PermissionError as e:
+        return f"Error: {e}"
+    except OSError as e:
+        return f"Error: {e}"
+    except TypeError as e:
+        return f"Error: {e}"
+    except UnicodeEncodeError as e:
+        return f"Error: {e}"
     except Exception as e:
         return f"Error: {e}"
