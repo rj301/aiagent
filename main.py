@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv  # import environmental variables
 from google import genai        # import google's genai library
 from google.genai import types
+from prompts import system_prompt
 
 
 def main():
@@ -34,7 +35,11 @@ def main():
     # Make a call to the Gemini API this creates a GenerateContentResponse object
     response_object = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=messages
+        contents=messages,
+        config=types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            temperature=0
+        ),
     )
 
     # Track token usage
