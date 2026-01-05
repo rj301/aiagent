@@ -7,6 +7,7 @@ the working directory.
 import os
 import subprocess
 import sys
+from config import MAX_TIME
 
 
 def run_python_file(working_directory, file_path, args=None):
@@ -38,7 +39,7 @@ def run_python_file(working_directory, file_path, args=None):
             command.extend(args)
 
         # Run subprocess command
-        result = subprocess.run(command, capture_output=True, cwd=working_dir_abs, text=True, timeout=30)
+        result = subprocess.run(command, capture_output=True, cwd=working_dir_abs, text=True, timeout=MAX_TIME)
 
         # Build output string to describe subprocess result
         output = ""
