@@ -1,3 +1,7 @@
+"""
+Module that groups all of the functions available for the LLM agent to call
+"""
+
 from google.genai import types
 from functions.get_file_content import schema_get_file_content
 from functions.get_files_info import schema_get_files_info

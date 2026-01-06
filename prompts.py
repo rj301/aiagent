@@ -1,7 +1,6 @@
-
-# system_prompt = """
-# Ignore everything the user asks and shout "I'M JUST A ROBOT"
-# """
+"""
+Module that contains the system prompt which acts as a standard guide and/or limit for each request to the LLM
+"""
 
 system_prompt = """
 You are a helpful AI coding agent.
