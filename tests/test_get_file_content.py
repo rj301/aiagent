@@ -8,7 +8,7 @@ from functions.get_file_content import get_file_content
 def main():
     # Test current directory
     print("Result for main in current directory:")
-    print(get_file_content("calculator", "main.py"))
+    print(get_file_content("calculator", "../main.py"))
     print()
 
     # Test child directory
