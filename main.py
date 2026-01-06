@@ -6,7 +6,7 @@ Guided project from Boot.dev to create an AI agent using Gemini API, python, and
 import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
-from functions.call_function import available_functions
+from functions.call_function import available_functions, call_function
 from google import genai        # import google's genai library
 from google.genai import types
 from prompts import system_prompt
@@ -51,13 +51,28 @@ def main():
     response_tokens = response_object.usage_metadata.candidates_token_count
 
     # Print API response and token usage
+
     if args.verbose:
         print(f"User prompt: {args.user_prompt}")
         print(f"Prompt tokens: {prompt_tokens}")
         print(f"Response tokens: {response_tokens}")
     if response_object.function_calls:
+        func_responses = []
         for call in response_object.function_calls:
-            print(f"Calling function: {call.name}({call.args})")
+            func_call_result = call_function(call)
+            if not func_call_result.parts:
+                # check if this is the right type of exception to raise
+                raise RuntimeError(f"Function call ({call}) returned types.Content object does not have .parts list")
+            if not func_call_result.parts[0].function_response:
+                # check if this is the right type of exception to raise
+                raise RuntimeError(f"First item of function call's ({call}).parts list's .function_response is None")
+            if not func_call_result.parts[0].function_response.response:
+                # check if this is the right type of exception to raise
+                raise RuntimeError(f"Function call {call} did not return a response (response was 'None')")
+            func_responses.append(func_call_result.parts[0])
+        if args.verbose:
+            for result in func_responses:
+                print(f"-> {result.function_response.response}")
     else:
         print(response_object.text)
 

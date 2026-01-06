@@ -62,7 +62,7 @@ schema_write_file = types.FunctionDeclaration(
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "filepath": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
                 description="The path to open the file that content is being written to, relative to the " \
                             "working directory. e.g. './foo.py'"
@@ -72,6 +72,6 @@ schema_write_file = types.FunctionDeclaration(
                 description="The content to be written to the file. e.g. 'Hello World'"
             )
         },
-        required=["filepath", "content"]
+        required=["file_path", "content"]
     )
 )

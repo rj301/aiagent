@@ -8,3 +8,7 @@ MAX_CHARS = 10000
 
 # Maximum amount of time for a subprocess to run
 MAX_TIME = 30
+
+# Working directory the agent is restricted to operate within
+WORKING_DIRECTORY = ("./calculator"
+                     "")

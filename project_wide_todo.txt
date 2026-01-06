@@ -2,3 +2,6 @@
 2) Revise/improve the project README
 3) Maybe change check for valid parameters comments to be check for valid arguments
 4) make sure all import statements are relative to root
+5) I passed the tests for 'Calling Functions' assignment, but I have no idea how to successfully prompt the AI to run a
+    python file and use arguments. I'm unsure if it's working correctly and I'm prompting wrong, or if it is not working
+    correctly and needs to be fixed.
