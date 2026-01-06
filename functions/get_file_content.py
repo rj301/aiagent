@@ -6,6 +6,7 @@ only access files within the working directory.
 
 import os
 from config import MAX_CHARS
+from google.genai import types
 
 
 def get_file_content(working_directory, file_path):
@@ -45,3 +46,22 @@ def get_file_content(working_directory, file_path):
         return f"Error: {e}"
     except Exception as e:
         return f"Error: {e}"
+
+
+# Schema to describe get_file_content() to LLM
+# Only one 'parameter' because we pass the working dir so the LLM just needs to know to provide the other path
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Function that gets file content for a specified file relative to the working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "filepath": types.Schema(
+                type=types.Type.STRING,
+                description="The path to open the file that content is being retrieved from, relative to the " \
+                            "working directory. e.g. './main.py'"
+            )
+        },
+        required=["filepath"]
+    )
+)

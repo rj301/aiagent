@@ -5,6 +5,7 @@ within the working directory.
 """
 
 import os
+from google.genai import types
 
 
 def write_file(working_directory, file_path, content):
@@ -52,3 +53,25 @@ def write_file(working_directory, file_path, content):
         return f"Error: {e}"
     except Exception as e:
         return f"Error: {e}"
+
+
+# Schema to describe write_file() to LLM
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="Function that writes to a specified file. Will completely overwrite the contents of any existing file.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "filepath": types.Schema(
+                type=types.Type.STRING,
+                description="The path to open the file that content is being written to, relative to the " \
+                            "working directory. e.g. './foo.py'"
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="The content to be written to the file. e.g. 'Hello World'"
+            )
+        },
+        required=["filepath", "content"]
+    )
+)

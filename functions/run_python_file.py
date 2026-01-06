@@ -8,6 +8,7 @@ import os
 import subprocess
 import sys
 from config import MAX_TIME
+from google.genai import types
 
 
 def run_python_file(working_directory, file_path, args=None):
@@ -63,3 +64,29 @@ def run_python_file(working_directory, file_path, args=None):
         return f"Error: Maximum time for subprocess execution was exceeded"
     except Exception as e:
         return f"Error: executing Python file: {e}"
+
+
+# Schema to describe run_python_file() to LLM
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Function that runs a python file with the structure '<python interpreter> <file.py> [additional args]",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "filepath": types.Schema(
+                type=types.Type.STRING,
+                description="The path to to the python file to be executed. File name must end in '.py'",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                # May need to improve the description of this
+                description="Additional arguments to pass into the python file that is being called",
+                # Describe the items held in the array
+                items=types.Schema(
+                    type=types.Type.STRING,
+                )
+            )
+        },
+        required=["filepath"]
+    )
+)
