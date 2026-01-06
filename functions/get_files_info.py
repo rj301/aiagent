@@ -11,6 +11,8 @@ the files' information in the following format:
 """
 
 import os
+from google import genai        # import google's genai library
+from google.genai import types
 
 
 def get_files_info(working_directory, directory="."):

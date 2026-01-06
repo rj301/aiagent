@@ -6,6 +6,7 @@ Guided project from Boot.dev to create an AI agent using Gemini API, python, and
 import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
+from functions.call_function import available_functions
 from google import genai        # import google's genai library
 from google.genai import types
 from prompts import system_prompt
@@ -37,8 +38,9 @@ def main():
         model="gemini-2.5-flash",
         contents=messages,
         config=types.GenerateContentConfig(
+            tools=[available_functions],
             system_instruction=system_prompt,
-            temperature=0
+            #temperature=0 #makes outputs less creative and more consistent
         ),
     )
 
@@ -53,7 +55,11 @@ def main():
         print(f"User prompt: {args.user_prompt}")
         print(f"Prompt tokens: {prompt_tokens}")
         print(f"Response tokens: {response_tokens}")
-    print(response_object.text)
+    if response_object.function_calls:
+        for call in response_object.function_calls:
+            print(f"Calling function: {call.name}({call.args})")
+    else:
+        print(response_object.text)
 
 
 if __name__ == "__main__":
