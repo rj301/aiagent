@@ -6,7 +6,7 @@ Guided project from Boot.dev to create an AI agent using Gemini API, python, and
 import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
-from call_function import available_functions
+from functions.call_function import available_functions
 from google import genai        # import google's genai library
 from google.genai import types
 from prompts import system_prompt
