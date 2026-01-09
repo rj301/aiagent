@@ -40,13 +40,13 @@ def get_file_content(working_directory, file_path):
         return file_content
 
     except PermissionError as e:
-        return f"Error: Permission while reading from \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except TypeError as e:
-        return f"Error: Type Error while reading from \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except UnicodeEncodeError as e:
-        return f"Error: Unicode Error while reading from \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except Exception as e:
-        return f"Error: Unexpected error while reading from \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
 
 
 # Schema to describe get_file_content() to LLM

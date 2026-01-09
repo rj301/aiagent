@@ -55,16 +55,16 @@ def run_python_file(working_directory, file_path, args=None):
         return output
 
     except UnicodeDecodeError as e:
-        return f"Error: Unicode error while running \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except FileNotFoundError as e:
         # This is expected to arise if the working directory does not exist when subprocess is run
         return f"Error: The working directory does not exist. Details: {e}"
     except TypeError as e:
-        return f"Error: TypeError while attempting to run \"{file_path}\". Details {e}"
+        return f"Error: {e}"
     except subprocess.TimeoutExpired:
         return f"Error: Maximum time for subprocess execution was exceeded"
     except Exception as e:
-        return f"Error: Unexpected failure while executing  \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
 
 
 # Schema to describe run_python_file() to LLM

@@ -44,15 +44,15 @@ def write_file(working_directory, file_path, content):
         return f"Successfully wrote to \"{file_path}\" ({len(content)} characters written)"
 
     except PermissionError as e:
-        return f"Error: Permission error for \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except OSError as e:
-        return f"Error: OSError wile writing to \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except TypeError as e:
-        return f"Error: Type error while writing to \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except UnicodeEncodeError as e:
-        return f"Error: Unicode error in content being written to \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
     except Exception as e:
-        return f"Error: Unexpected failure while writing to \"{file_path}\". Details: {e}"
+        return f"Error: {e}"
 
 
 # Schema to describe write_file() to LLM

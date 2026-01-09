@@ -43,13 +43,13 @@ def get_files_info(working_directory, directory="."):
         return '\n'.join(files_info)
 
     except PermissionError as e:
-        return f"Error: Permission error for \"{directory}\". Details: {e}"
+        return f"Error: {e}"
     except TypeError as e:
-        return f"Error: Type error for \"{directory}\". Details: {e}"
+        return f"Error: {e}"
     except ValueError as e:
-        return f"Error: Value error for \"{directory}\". Details: {e}"
+        return f"Error: {e}"
     except Exception as e:
-        return f"Error: Unexpected error for \"{directory}\". Details: {e}"
+        return f"Error: {e}"
 
 
 def _build_file_str(target_directory):
