@@ -22,7 +22,7 @@ def get_files_info(working_directory, directory="."):
     :return: String listing each file, its size, and if it is a directory
     """
     try:
-        # Check for valid parameters
+        # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
         target_dir = os.path.normpath(os.path.join(working_dir_abs, directory))
         is_valid_target_dir = os.path.commonpath([working_dir_abs, target_dir]) == working_dir_abs

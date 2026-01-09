@@ -1,13 +1,31 @@
+"""
+Module to define a function that processes commands for the AI agent by creating calls to the Gemini API as until the
+agent finishes calling functions or a maximum number of calls for a single query has occurred. Will print agent's final
+response and return if the agent failed to generate a response.
+"""
+
+from config import MAX_API_CALLS
 from google.genai import types
 from functions.call_function import available_functions, call_function
 from prompts import system_prompt
 
-# Loop call to AI model calls to create 'Agent Loop'
+
 def get_agent_response(client, args):
+    """
+    Function that calls the Gemini API to generate a response until the response doesn't include function calls or a
+    maximum number of API calls has occurred. Tracks total token usage and prints the final API call response and total
+    token usage.
+    :param client: Gemini API client object
+    :param args: arguments declared when the program was run containing the user's prompt for the AI agent
+    :return: string containing "success" if response was printed and "failure" if MAX_API_CALLS is reached
+    """
     # Initialize list of conversation messages with initial user prompt
     messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
 
-    for _ in range(20):
+    total_prompt_tokens = 0
+    total_response_tokens = 0
+
+    for _ in range(MAX_API_CALLS):
         # Make a call to the Gemini API this creates a GenerateContentResponse object
         response_object = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -29,6 +47,8 @@ def get_agent_response(client, args):
 
         prompt_tokens = response_object.usage_metadata.prompt_token_count
         response_tokens = response_object.usage_metadata.candidates_token_count
+        total_prompt_tokens += prompt_tokens
+        total_response_tokens += response_tokens
 
         # Print API response and token usage
         if args.verbose:
@@ -61,11 +81,11 @@ def get_agent_response(client, args):
                     print(f"-> {result.function_response.response}")
 
         else:
+            print(f"TOKEN USAGE: {total_prompt_tokens} prompt tokens and {total_response_tokens} response tokens")
             print(response_object.text)
             return "success"
 
         # Add function responses to messages passed to Agent
-        # confirm to extend the candidates earlier but to append the func results
         messages.append(types.Content(role="user", parts=func_responses))
 
     return "failure"

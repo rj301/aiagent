@@ -17,7 +17,7 @@ def get_file_content(working_directory, file_path):
     :return: Content of file or failure of reading from target file
     """
     try:
-        # Check for valid parameters
+        # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
         target_file_path = os.path.normpath(os.path.join(working_dir_abs, file_path))
         is_valid_target_file = os.path.commonpath([working_dir_abs, target_file_path]) == working_dir_abs

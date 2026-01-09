@@ -20,7 +20,7 @@ def run_python_file(working_directory, file_path, args=None):
     :return: Result of running python file including stdout, stderr, and non-zero exit code
     """
     try:
-        # Check for valid parameters
+        # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
         target_file_path = os.path.normpath(os.path.join(working_dir_abs, file_path))
         is_valid_target_file = os.path.commonpath([working_dir_abs, target_file_path]) == working_dir_abs
