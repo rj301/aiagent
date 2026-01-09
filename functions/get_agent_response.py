@@ -48,8 +48,10 @@ def get_agent_response(client, args):
 
         prompt_tokens = response_object.usage_metadata.prompt_token_count
         response_tokens = response_object.usage_metadata.candidates_token_count
-        total_prompt_tokens += prompt_tokens
-        total_response_tokens += response_tokens
+        if prompt_tokens:
+            total_prompt_tokens += prompt_tokens
+        if response_tokens:
+            total_response_tokens += response_tokens
 
         # Print API response and token usage
         if args.verbose:
