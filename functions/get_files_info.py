@@ -21,6 +21,7 @@ def get_files_info(working_directory, directory="."):
     :param directory: Relative file-path to target directory to get information about
     :return: String listing each file, its size, and if it is a directory
     """
+
     try:
         # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
@@ -42,13 +43,13 @@ def get_files_info(working_directory, directory="."):
         return '\n'.join(files_info)
 
     except PermissionError as e:
-        return f"Error: {e}"
+        return f"Error: Permission error for \"{directory}\". Details: {e}"
     except TypeError as e:
-        return f"Error: {e}"
+        return f"Error: Type error for \"{directory}\". Details: {e}"
     except ValueError as e:
-        return f"Error: {e}"
+        return f"Error: Value error for \"{directory}\". Details: {e}"
     except Exception as e:
-        return f"Error: {e}"
+        return f"Error: Unexpected error for \"{directory}\". Details: {e}"
 
 
 def _build_file_str(target_directory):
@@ -59,6 +60,7 @@ def _build_file_str(target_directory):
     :param target_directory: The directory the file is in
     :return: String documenting file information
     """
+
     def inner(file):
         file_path = os.path.join(target_directory, file)
         return f"- {file}: file_size={os.path.getsize(file_path)} bytes, is_dir={os.path.isdir(file_path)}"

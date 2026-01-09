@@ -21,6 +21,13 @@ available_functions = types.Tool(
 
 
 def call_function(function_call, verbose=False):
+    """
+    Function that calls functions for the Agent
+    :param function_call: The function the Agent is attempting to call
+    :param verbose: Optional argument that enables detailed information about the function being called
+    :return: types.Content object communicating failure or function result to the AI Agent
+    """
+
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
     else:

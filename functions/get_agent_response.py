@@ -19,6 +19,7 @@ def get_agent_response(client, args):
     :param args: arguments declared when the program was run containing the user's prompt for the AI agent
     :return: string containing "success" if response was printed and "failure" if MAX_API_CALLS is reached
     """
+
     # Initialize list of conversation messages with initial user prompt
     messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
 

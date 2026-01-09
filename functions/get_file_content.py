@@ -16,6 +16,7 @@ def get_file_content(working_directory, file_path):
     :param file_path: Path to target file
     :return: Content of file or failure of reading from target file
     """
+
     try:
         # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
@@ -39,13 +40,13 @@ def get_file_content(working_directory, file_path):
         return file_content
 
     except PermissionError as e:
-        return f"Error: {e}"
+        return f"Error: Permission while reading from \"{file_path}\". Details: {e}"
     except TypeError as e:
-        return f"Error: {e}"
+        return f"Error: Type Error while reading from \"{file_path}\". Details: {e}"
     except UnicodeEncodeError as e:
-        return f"Error: {e}"
+        return f"Error: Unicode Error while reading from \"{file_path}\". Details: {e}"
     except Exception as e:
-        return f"Error: {e}"
+        return f"Error: Unexpected error while reading from \"{file_path}\". Details: {e}"
 
 
 # Schema to describe get_file_content() to LLM

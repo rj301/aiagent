@@ -19,6 +19,7 @@ def run_python_file(working_directory, file_path, args=None):
     :param args: Additional arguments to call with python command
     :return: Result of running python file including stdout, stderr, and non-zero exit code
     """
+
     try:
         # Check for valid arguments
         working_dir_abs = os.path.abspath(working_directory)
@@ -54,16 +55,16 @@ def run_python_file(working_directory, file_path, args=None):
         return output
 
     except UnicodeDecodeError as e:
-        return f"Error: {e}"
+        return f"Error: Unicode error while running \"{file_path}\". Details: {e}"
     except FileNotFoundError as e:
-        # This is expected to arise if teh working directory does not exist when subprocess is run
-        return f"Error: The working directory does not exist{e}"
+        # This is expected to arise if the working directory does not exist when subprocess is run
+        return f"Error: The working directory does not exist. Details: {e}"
     except TypeError as e:
-        return f"Error: {e}"
+        return f"Error: TypeError while attempting to run \"{file_path}\". Details {e}"
     except subprocess.TimeoutExpired:
         return f"Error: Maximum time for subprocess execution was exceeded"
     except Exception as e:
-        return f"Error: executing Python file: {e}"
+        return f"Error: Unexpected failure while executing  \"{file_path}\". Details: {e}"
 
 
 # Schema to describe run_python_file() to LLM
