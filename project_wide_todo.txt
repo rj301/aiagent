@@ -5,3 +5,8 @@
 5) I passed the tests for 'Calling Functions' assignment, but I have no idea how to successfully prompt the AI to run a
     python file and use arguments. I'm unsure if it's working correctly and I'm prompting wrong, or if it is not working
     correctly and needs to be fixed.
+6) Add a funcitonality to tell the user the total number of tokens that are used with each prompt
+7) explore the need for more helper functions
+8) document get_agent_response.py
+9) add 20 call max to config.py
+10) it seems to hallucinate when going down a long string of files and not keep checking the contents?

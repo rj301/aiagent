@@ -6,10 +6,8 @@ Guided project from Boot.dev to create an AI agent using Gemini API, python, and
 import argparse
 import os
 from dotenv import load_dotenv  # import environmental variables
-from functions.call_function import available_functions, call_function
 from google import genai        # import google's genai library
-from google.genai import types
-from prompts import system_prompt
+from functions.get_agent_response import get_agent_response
 
 
 def main():
@@ -30,51 +28,11 @@ def main():
     # Create an instance of a Gemini client
     client = genai.Client(api_key=api_key)
 
-    # Initialize list of conversation messages with initial user prompt
-    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
+    if get_agent_response(client, args) == "failure":
+        print("Failed to get agent response")
+        exit(1)
 
-    # Make a call to the Gemini API this creates a GenerateContentResponse object
-    response_object = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=messages,
-        config=types.GenerateContentConfig(
-            tools=[available_functions],
-            system_instruction=system_prompt,
-            #temperature=0 #makes outputs less creative and more consistent
-        ),
-    )
-
-    # Track token usage
-    if not response_object.usage_metadata:
-        raise RuntimeError("failed API request")
-    prompt_tokens = response_object.usage_metadata.prompt_token_count
-    response_tokens = response_object.usage_metadata.candidates_token_count
-
-    # Print API response and token usage
-
-    if args.verbose:
-        print(f"User prompt: {args.user_prompt}")
-        print(f"Prompt tokens: {prompt_tokens}")
-        print(f"Response tokens: {response_tokens}")
-    if response_object.function_calls:
-        func_responses = []
-        for call in response_object.function_calls:
-            func_call_result = call_function(call)
-            if not func_call_result.parts:
-                # check if this is the right type of exception to raise
-                raise RuntimeError(f"Function call ({call}) returned types.Content object does not have .parts list")
-            if not func_call_result.parts[0].function_response:
-                # check if this is the right type of exception to raise
-                raise RuntimeError(f"First item of function call's ({call}).parts list's .function_response is None")
-            if not func_call_result.parts[0].function_response.response:
-                # check if this is the right type of exception to raise
-                raise RuntimeError(f"Function call {call} did not return a response (response was 'None')")
-            func_responses.append(func_call_result.parts[0])
-        if args.verbose:
-            for result in func_responses:
-                print(f"-> {result.function_response.response}")
-    else:
-        print(response_object.text)
+    exit(0)
 
 
 if __name__ == "__main__":

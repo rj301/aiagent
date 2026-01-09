@@ -10,5 +10,4 @@ MAX_CHARS = 10000
 MAX_TIME = 30
 
 # Working directory the agent is restricted to operate within
-WORKING_DIRECTORY = ("./calculator"
-                     "")
+WORKING_DIRECTORY = ("./calculator")
